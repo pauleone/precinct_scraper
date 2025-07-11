@@ -78,7 +78,7 @@ def parse_links(df: pd.DataFrame) -> pd.DataFrame:
                 for key, value in extracted.items():
                     if key not in df.columns:
                         df[key] = ""
-                    df.at[idx, key] = value
+                    df.at[idx, key] = str(value)
             except Exception as exc:  # broad catch to continue processing
                 print(f"Failed to process {url}: {exc}")
 
@@ -88,7 +88,8 @@ def parse_links(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> None:
-    df = pd.read_csv(INPUT_CSV)
+    # Read all columns as strings to avoid dtype warnings when assigning
+    df = pd.read_csv(INPUT_CSV, dtype=str)
     updated = parse_links(df)
     updated.to_csv(OUTPUT_CSV, index=False)
 
