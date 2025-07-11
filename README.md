@@ -24,4 +24,20 @@ python precinct_scraper.py
 
 The script will output a CSV file named `precincts.csv` containing aggregated precinct data.
 
+## Parsing office links
+
+The repository also includes `vote_office_parser.py` which parses detailed
+voting office pages referenced in a CSV. Provide a CSV with `State`,
+`Precinct` and `Link` columns (such as the exported data from the U.S. Vote
+Foundation) named `US Vote Foundation - Cleaned_Voting_Office_Data.csv` in the
+project directory. Run the parser with:
+
+```bash
+python vote_office_parser.py
+```
+
+This will generate `US_Vote_Office_Data_Parsed.csv` containing addresses,
+emails, websites and official details discovered at each link. The parser
+loads the input CSV with all columns as strings to avoid Pandas dtype warnings.
+
 **Note:** Each API has its own terms of service and rate limits. Make sure you have permission to use the data and comply with any restrictions.
