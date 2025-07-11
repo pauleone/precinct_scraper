@@ -4,7 +4,6 @@ from typing import List, Dict, Any
 
 import requests
 
-GOOGLE_CIVIC_API_KEY = os.getenv("GOOGLE_CIVIC_API_KEY")
 VOTEAMERICA_API_KEY = os.getenv("VOTEAMERICA_API_KEY")
 CIVIC_API_KEY = os.getenv("CIVIC_API_KEY")
 
@@ -18,17 +17,6 @@ def fetch_voteamerica(state: str) -> List[Dict[str, Any]]:
     resp = requests.get(url, headers=headers, timeout=30)
     resp.raise_for_status()
     return resp.json().get("offices", [])
-
-
-def fetch_google_civic(address: str) -> Dict[str, Any]:
-    """Fetch officials using Google Civic Information API."""
-    if not GOOGLE_CIVIC_API_KEY:
-        return {}
-    url = "https://www.googleapis.com/civicinfo/v2/representatives"
-    params = {"key": GOOGLE_CIVIC_API_KEY, "address": address}
-    resp = requests.get(url, params=params, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
 
 
 def fetch_civicapi(state: str) -> List[Dict[str, Any]]:
